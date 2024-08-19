@@ -1,73 +1,34 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Sistema de Gestão Cultural - Projeto guiado de NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este repositório contém o código para um sistema de gestão cultural que permite o cadastro e gerenciamento de alunos e suas informações relacionadas. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Funcionalidades Implementadas
 
-## Description
+- **Cadastro de Alunos**: Permite o cadastro de novos alunos, incluindo verificação de idade mínima e prevenção de duplicidade.
+- **Validações de Dados**:
+  - Validação de idade mínima para o cadastro (pelo menos 17 anos).
+  - Validação para evitar duplicação de nomes de alunos.
+  - Validações para os campos obrigatórios e formatos corretos (telefone e email).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Estrutura do Projeto
 
-## Installation
+- **`src/aluno/aluno.service.ts`**: Implementa a lógica de negócios para o cadastro de alunos. Inclui a verificação de duplicidade e idade mínima.
+  
+- **`src/aluno/dto/create-aluno.dto.ts`**: Define o Data Transfer Object (DTO) para a criação de novos alunos, com validações para garantir a integridade dos dados fornecidos.
 
-```bash
-$ npm install
-```
+- **`src/aluno/entities/aluno.entity.ts`**: Define a entidade  que representa um aluno no sistema com as propriedades básicas e um construtor para inicialização.
 
-## Running the app
+- **`src/aluno/aluno.controller.ts`**: Define o controlador para a rota que lida com as requisições HTTP para cadastro.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+***Teste o endpoint de cadastro de alunos**:
+    - Endpoint: `POST /aluno`
+    - Corpo da requisição (exemplo):
+      ```json
+      {
+        "nome": "João Silva",
+        "endereco": "Rua Exemplo, 123",
+        "telefone": "123456789",
+        "email": "joao.silva@example.com",
+        "curso": "Ma
+      }
+      ```
