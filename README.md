@@ -20,15 +20,17 @@ Este repositório contém o código para um sistema de gestão cultural que perm
 
 - **`src/aluno/aluno.controller.ts`**: Define o controlador para a rota que lida com as requisições HTTP para cadastro.
 
-***Teste o endpoint de cadastro de alunos**:
-    - Endpoint: `POST /aluno`
-    - Corpo da requisição (exemplo):
-      ```json
-      {
-        "nome": "João Silva",
-        "endereco": "Rua Exemplo, 123",
-        "telefone": "123456789",
-        "email": "joao.silva@example.com",
-        "curso": "Ma
-      }
-      ```
+***Teste unitário**:
+    
+**Instale as dependências do projeto:**
+
+    ```bash
+    `npm install --save-dev jest @nestjs/testing ts-jest @types/jest`
+    ```
+    Para rodar os testes, execute o comando:
+
+    ```bash
+    `npm run test`
+    ```
+    
+
