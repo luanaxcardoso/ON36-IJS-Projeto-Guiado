@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { AlunoService } from './aluno.service';
 import { AlunoController } from './aluno.controller';

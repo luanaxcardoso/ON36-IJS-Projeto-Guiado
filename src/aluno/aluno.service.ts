@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+
 import { Injectable, ForbiddenException, ConflictException } from '@nestjs/common';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { Aluno } from './entities/aluno.entity';
