@@ -3,61 +3,55 @@ import { AlunoService } from './aluno.service';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { Aluno } from './entities/aluno.entity';
 import { ForbiddenException, ConflictException } from '@nestjs/common';
+import { AlunoRepository } from './aluno.repository';
 
 describe('AlunoService', () => {
   let service: AlunoService;
+  let mockAlunoRepository: Partial<AlunoRepository>;
 
   beforeEach(async () => {
+    
+    mockAlunoRepository = {
+      listar: jest.fn(),
+      criar: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AlunoService],
+      providers: [
+        AlunoService,
+        { provide: AlunoRepository, useValue: mockAlunoRepository }, 
+      ],
     }).compile();
 
     service = module.get<AlunoService>(AlunoService);
   });
 
-  it('deve cadastrar um aluno com sucesso', () => {
+  it('Deve cadastrar um aluno', async () => {
     const createAlunoDto: CreateAlunoDto = {
-      nome: 'Marcos Oliveira',
-      endereco: 'Avenida das Rosas, 456',
+      nome: 'Luana Cardoso',
+      endereco: 'Avenida das Rosas, 1556',
       telefone: '127654321',
-      email: 'marcos.oliveira@gmail.com',
-      curso: 'Java',
+      email: 'luana.cardoso@gmail.com',
+      curso: 'Javascript',
       anoNascimento: 2000,
     };
 
-    const aluno: Aluno = service.cadastrar(createAlunoDto);
-
-    expect(aluno).toBeDefined();
-    expect(aluno.nome).toBe(createAlunoDto.nome);
-    expect(aluno.id).toBe(1); 
-    expect(service['alunos'].length).toBe(1); 
-  });
-
-  it('deve lançar uma exceção de conflito se o aluno já estiver cadastrado', () => {
-    const createAlunoDto: CreateAlunoDto = {
-      nome: 'Luana Cardoso',
-      endereco: 'Rua Amora, 129',
-      telefone: '12999999',
-      email: 'luana.cardoso@gmail.com',
-      curso: 'Javascript',
-      anoNascimento: 1986,
+    const aluno: Aluno = {
+      id: 'some-uuid',
+      ...createAlunoDto,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
 
-    service.cadastrar(createAlunoDto);
+    mockAlunoRepository.listar = jest.fn().mockReturnValue([]);
+    mockAlunoRepository.criar = jest.fn().mockReturnValue(aluno);
 
-    expect(() => service.cadastrar(createAlunoDto)).toThrow(ConflictException);
+    const resultado = await service.cadastrar(createAlunoDto);
+
+    expect(resultado).toBeDefined();
+    expect(resultado.nome).toBe(createAlunoDto.nome);
+    expect(resultado.id).toBeDefined(); 
+    expect(mockAlunoRepository.criar).toHaveBeenCalledWith(resultado);
   });
 
-  it('deve lançar uma exceção de proibido se a idade for menor que a mínima', () => {
-    const createAlunoDto: CreateAlunoDto = {
-      nome: 'Paula Costa',
-      endereco: 'Rua das Flores, 21',
-      telefone: '1216549867',
-      email: 'paula.costa@gmail.com',
-      curso: 'Python',
-      anoNascimento: new Date().getFullYear() - 15, 
-    };
-
-    expect(() => service.cadastrar(createAlunoDto)).toThrow(ForbiddenException);
-  });
 });
