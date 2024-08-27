@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { IsNotEmpty, IsEmail, IsNumber, IsString, IsMobilePhone, Min } from 'class-validator';
 
 export class CreateAlunoDto {
